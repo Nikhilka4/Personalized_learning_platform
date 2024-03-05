@@ -9,6 +9,10 @@ export const createLayout = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { type } = req.body;
+      const isTypeExist = await LayoutModel.findOne({ type });
+      if (isTypeExist) {
+        return next(new ErrorHandler(`${type} already exist`, 400));
+      }
       if (type === "Banner") {
         const { image, title, subTitle } = req.body;
         const myCloud = await cloudinary.v2.uploader.upload(image, {
@@ -34,11 +38,35 @@ export const createLayout = CatchAsyncError(
             };
           })
         );
-        await LayoutModel.create({type:"FAQ", faq:faqItems});
+        await LayoutModel.create({ type: "FAQ", faq: faqItems });
       }
+      // if (type === "Categories") {
+      //   const { categories } = req.body;
+      //   const categoriesItems = await Promise.all(
+      //     categories.map(async (item: any) => {
+      //       return {
+      //         title: item.title,
+      //       };
+      //     })
+      //   );
+      //   await LayoutModel.create({
+      //     type: "Categories",
+      //     categories: categoriesItems,
+      //   });
+      // }
       if (type === "Categories") {
-        const { categories } = req.body;
-        await LayoutModel.create(categories);
+        const {categories} = req.body;
+        const categoriesItems =  await Promise.all(
+          categories.map(async (item: any) => {
+            return{
+              title : item.title,
+            }
+          })
+        )
+        await LayoutModel.create({
+          type: "Categories",
+          categories: categoriesItems
+        })
       }
       res.status(200).json({
         success: true,
