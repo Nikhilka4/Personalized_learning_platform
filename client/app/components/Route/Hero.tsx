@@ -71,11 +71,3 @@ const Hero: FC<Props> = (props) => {
 }
 
 export default Hero;
-
-
-
-
-
-
-
-
