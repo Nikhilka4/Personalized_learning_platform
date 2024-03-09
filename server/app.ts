@@ -23,7 +23,8 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: process.env.ORIGIN, // process is used to access the environment variables in the.env file
+    origin: ['http://localhost:3000'], // process is used to access the environment variables in the.env file
+    credentials: true,
   })
 );
 
