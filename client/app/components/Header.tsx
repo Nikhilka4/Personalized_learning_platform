@@ -1,13 +1,22 @@
 "use client";
 import Link from "next/link";
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import NavItems from "../utils/NavItems";
 import { ThemeSwitcher } from "../utils/ThemeSwitcher";
 import { HiOutlineMenuAlt3, HiOutlineUserCircle } from "react-icons/hi";
 import CustomModal from "../utils/CustomModal";
-import Login from "../components/Auth/Login"
+import Login from "../components/Auth/Login";
 import SignUp from "../components/Auth/SignUp";
 import Verification from "../components/Auth/Verification";
+import { useSelector } from "react-redux";
+import Image from "next/image";
+import avatar from "../../public/assets/avatar.png";
+import { useSession } from "next-auth/react";
+import {
+  useLogOutQuery,
+  useSocialAuthMutation,
+} from "@/redux/features/auth/authApi";
+import toast from "react-hot-toast";
 
 type Props = {
   open: boolean;
@@ -20,6 +29,34 @@ type Props = {
 const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
   const [active, setActive] = useState(false);
   const [openSidebar, setOpenSideBar] = useState(false);
+  const { user } = useSelector((state: any) => state.auth);
+  const { data } = useSession();
+  const [socialAuth, { isSuccess, error }] = useSocialAuthMutation();
+  const [logout, setLogout] = useState(false);
+  const {} = useLogOutQuery(undefined, {
+    skip: !logout ? true : false,
+  });
+
+  useEffect(() => {
+    if (!user) {
+      if (data) {
+        socialAuth({
+          email: data?.user?.email,
+          name: data?.user?.name,
+          avatar: data.user?.image,
+        });
+      }
+    }
+    if (data === null) {
+      if (isSuccess) {
+        toast.success("Login Successfully");
+      }
+    }
+    if (data === null) {
+      setLogout(true);
+    }
+  }, [data, user]);
+
   if (typeof window !== "undefined") {
     window.addEventListener("scroll", () => {
       if (window.scrollY > 85) {
@@ -68,11 +105,21 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
                   onClick={() => setOpenSideBar(true)}
                 />
               </div>
-              <HiOutlineUserCircle
-                size={25}
-                className="hidden 800px:block cursor-pointer dark:text-white text-black"
-                onClick={() => setOpen(true)}
-              />
+              {user ? (
+                <Link href={"/profile"}>
+                  <Image
+                    src={user.avatar ? user.avatar : avatar}
+                    alt=""
+                    className="w-[40px] h-[30px] rounded-full cursor-pointer"
+                  />
+                </Link>
+              ) : (
+                <HiOutlineUserCircle
+                  size={25}
+                  className="hidden 800px:block cursor-pointer dark:text-white text-black"
+                  onClick={() => setOpen(true)}
+                />
+              )}
             </div>
           </div>
         </div>
@@ -84,11 +131,11 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
             id="screen"
           >
             <div className="w-[70%] fixed z-[999999999] h-screen bg-white dark:bg-slate-900 dark:bg-opacity-90 top-0 right-0">
-              <NavItems activeItem={activeItem} isMobile={true} /> 
-              <HiOutlineUserCircle 
-              size={25}
-              className="cursor-pointer ml-5 my-2 dark:text-white text-black"
-              onClick={() => setOpen(true)}
+              <NavItems activeItem={activeItem} isMobile={true} />
+              <HiOutlineUserCircle
+                size={25}
+                className="cursor-pointer ml-5 my-2 dark:text-white text-black"
+                onClick={() => setOpen(true)}
               />
               <br />
               <br />
@@ -99,57 +146,45 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
           </div>
         )}
       </div>
-      {
-        route === "Login" && (
-          <>
-            {
-              open && (
-                <CustomModal 
-                  open={open}
-                  setOpen={setOpen}
-                  setRoute={setRoute}
-                  activeItem={activeItem}
-                  component={Login}
-                />
-              )
-            }
-          </>
-        )
-      }
-      {
-        route === "Sign-Up" && (
-          <>
-            {
-              open && (
-                <CustomModal 
-                  open={open}
-                  setOpen={setOpen}
-                  setRoute={setRoute}
-                  activeItem={activeItem}
-                  component={SignUp}
-                />
-              )
-            }
-          </>
-        )
-      }
-      {
-        route === "Verification" && (
-          <>
-            {
-              open && (
-                <CustomModal 
-                  open={open}
-                  setOpen={setOpen}
-                  setRoute={setRoute}
-                  activeItem={activeItem}
-                  component={Verification}
-                />
-              )
-            }
-          </>
-        )
-      }
+      {route === "Login" && (
+        <>
+          {open && (
+            <CustomModal
+              open={open}
+              setOpen={setOpen}
+              setRoute={setRoute}
+              activeItem={activeItem}
+              component={Login}
+            />
+          )}
+        </>
+      )}
+      {route === "Sign-Up" && (
+        <>
+          {open && (
+            <CustomModal
+              open={open}
+              setOpen={setOpen}
+              setRoute={setRoute}
+              activeItem={activeItem}
+              component={SignUp}
+            />
+          )}
+        </>
+      )}
+      {route === "Verification" && (
+        <>
+          {open && (
+            <CustomModal
+              open={open}
+              setOpen={setOpen}
+              setRoute={setRoute}
+              activeItem={activeItem}
+              component={Verification}
+            />
+          )}
+        </>
+      )}
     </div>
   );
 };
