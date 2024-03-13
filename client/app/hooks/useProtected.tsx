@@ -1,6 +1,5 @@
 import { redirect } from "next/navigation";
 import UserAuth from "./userAuth";
-// import Login from "../components/Auth/Login"
 
 
 interface ProtectedProps {
