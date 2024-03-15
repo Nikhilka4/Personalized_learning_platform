@@ -104,18 +104,18 @@ const CourseData: FC<Props> = ({
         />
       </div>
       <div className="w-full flex items-center justify-between">
-      <div
-        className="w-[30%] flex items-center justify-center h-[40px] bg-[#37a39a] text-center text-[#fff] rounded mt-8 cursor-pointer"
-        onClick={() => prevButton()}
-      >
-        Prev
-      </div>
-      <div
-        className="w-[30%] flex items-center justify-center h-[40px] bg-[#37a39a] text-center text-[#fff] rounded mt-8 cursor-pointer"
-        onClick={() => handleOptions()}
-      >
-        Next
-      </div>
+        <div
+          className="w-[30%] flex items-center justify-center h-[40px] bg-[#37a39a] text-center text-[#fff] rounded mt-8 cursor-pointer"
+          onClick={() => prevButton()}
+        >
+          Prev
+        </div>
+        <div
+          className="w-[30%] flex items-center justify-center h-[40px] bg-[#37a39a] text-center text-[#fff] rounded mt-8 cursor-pointer"
+          onClick={() => handleOptions()}
+        >
+          Next
+        </div>
       </div>
     </div>
   );

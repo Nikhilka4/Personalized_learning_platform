@@ -14,20 +14,20 @@ userRouter.get('/logout',isAuthenticated, logoutUser);
 
 userRouter.get('/refresh',updateAccessToken)
 
-userRouter.get('/me',isAuthenticated,getUserInfo)
+userRouter.get('/me',updateAccessToken,isAuthenticated,getUserInfo)
 
 userRouter.post("/social-auth", socialAuth);
 
-userRouter.put("/update-user-info",isAuthenticated, updateUserInfo);
+userRouter.put("/update-user-info",updateAccessToken,isAuthenticated, updateUserInfo);
 
-userRouter.put("/update-user-password",isAuthenticated, updatePassword);
+userRouter.put("/update-user-password",updateAccessToken,isAuthenticated, updatePassword);
 
-userRouter.put("/update-user-avatar",isAuthenticated, updateProfilePicture);
+userRouter.put("/update-user-avatar",updateAccessToken,isAuthenticated, updateProfilePicture);
 
-userRouter.get("/get-users",isAuthenticated,authorizeRole("admin"), getAllUsers);
+userRouter.get("/get-users",updateAccessToken,isAuthenticated,authorizeRole("admin"), getAllUsers);
 
-userRouter.put("/update-user",isAuthenticated,authorizeRole("admin"), updateUserRole);
+userRouter.put("/update-user",updateAccessToken,isAuthenticated,authorizeRole("admin"), updateUserRole);
 
-userRouter.delete("/delete-user/:id",isAuthenticated,authorizeRole("admin"), deleteUser);
+userRouter.delete("/delete-user/:id",updateAccessToken,isAuthenticated,authorizeRole("admin"), deleteUser);
 
 export default userRouter;

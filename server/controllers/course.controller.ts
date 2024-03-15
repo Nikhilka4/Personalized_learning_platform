@@ -1,3 +1,4 @@
+import  axios  from 'axios';
 import { Response, Request, NextFunction } from "express";
 import { CatchAsyncError } from "../middleware/catchAsyncErrors";
 import ErrorHandler from "../utils/ErrorHandler";
@@ -10,8 +11,6 @@ import ejs from "ejs";
 import path from "path";
 import sendMail from "../utils/sendMail";
 import NotificationModel from "../models/notificationModel";
-import { getAllUsersService } from "../services/user.service";
-import courseRouter from "../routes/course.route";
 
 
 export const uploadCourse = CatchAsyncError(
@@ -94,7 +93,7 @@ export const getSingleCourse = CatchAsyncError(
           "-courseData.videoUrl -courseData.suggestions -courseData.questions -courseData.links"
         );
 
-        await redis.set(courseId, JSON.stringify(course),'EX',604800);
+        await redis.set(courseId, JSON.stringify(course), "EX", 604800);
 
         res.status(200).json({
           success: true,
@@ -432,28 +431,51 @@ export const getAllUsers = CatchAsyncError(
   }
 );
 
-
 // delete course --- only for admin
 
-export const deleteCourse = CatchAsyncError(async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const {id} = req.params;
+export const deleteCourse = CatchAsyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = req.params;
 
-    const course = await CourseModel.findById(id);
-    if (!course) {
-      return next(new ErrorHandler("course not found", 400));
+      const course = await CourseModel.findById(id);
+      if (!course) {
+        return next(new ErrorHandler("course not found", 400));
+      }
+
+      await course.deleteOne({ id });
+
+      await redis.del(id);
+
+      res.status(200).json({
+        success: true,
+        message: "course deleted successfully",
+      });
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, 400));
     }
-
-    await course.deleteOne({id});
-
-    await redis.del(id);
-
-    res.status(200).json({
-      success: true,
-      message: "course deleted successfully",
-    });
-  } catch (error: any) {
-    return next(new ErrorHandler(error.message, 400));
   }
-}
+);
+
+//generate video url
+export const generateVideoUrl = CatchAsyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { videoId } = req.body;
+      const responce = await axios.post(
+        `https://dev.vdocipher.com/api/videos/${videoId}/otp`,
+        { ttl: 300 },
+        {
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Apisecret ${process.env.VDOCIPHER_API_SECRET}`,
+          },
+        }
+      );
+      res.json(responce.data);
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, 400));
+    }
+  }
 );
