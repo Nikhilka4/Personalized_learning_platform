@@ -6,6 +6,8 @@ import { useTheme } from "next-themes";
 import { FiEdit2 } from "react-icons/fi";
 import { useGetAllCoursesQuery } from "@/redux/features/courses/coursesApi";
 import Loader from "../../Loader/Loader";
+import {format} from 'timeago.js'
+
 type Props = {};
 
 const AllCourses = (props: Props) => {
@@ -50,7 +52,7 @@ const AllCourses = (props: Props) => {
       },
     },
   ];
-  const rows = [];
+  const rows:any = [];
 
   {
     data &&
@@ -60,7 +62,7 @@ const AllCourses = (props: Props) => {
           title: item.name,
           ratings: item.ratings,
           purchased: item.purchased,
-          created_at: item.createdAt,
+          created_at: format(item.createdAt),
         });
       });
   }
