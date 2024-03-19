@@ -51,7 +51,7 @@ const EditCourse:FC<Props> = ({id}) => {
         })
         setBenefits(editCourseData.benefits);
         setPrerequisites(editCourseData.prerequisites);
-        setCourseContentData(editCourseData.CourseData);
+        setCourseContentData(editCourseData.courseData);
     }
   }, [editCourseData])
 
