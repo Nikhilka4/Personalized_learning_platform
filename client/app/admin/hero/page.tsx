@@ -1,10 +1,10 @@
 "use client";
 import React from "react";
-import AdminSidebar from "../../../components/Admin/Sidebar/AdminSidebar";
-import Heading from "../../../../app/utils/Heading";
-import EditCourse from "../../../components/Admin/Course/EditCourse";
-import DashboardHeader from "../../../../app/components/Admin/Dashboard/DashboardHeader";
-
+import AdminSidebar from "../../components/Admin/Sidebar/AdminSidebar";
+import Heading from "../../../app/utils/Heading";
+import AdminProtected from "@/app/hooks/adminProtectedr";
+import DashboardHero from "../../../app/components/Admin/Dashboard/DashboardHero";
+import EditHero from "../../components/Admin/Customization/EditHero";
 
 
 type Props = {};
@@ -13,6 +13,7 @@ const page = ({params}:any) => {
     const id = params.id
   return (
     <div>
+      <AdminProtected>
       <Heading
         title="ELearning - Admin"
         description="Elearning is a platform for students to learn and get help from teachers"
@@ -23,10 +24,11 @@ const page = ({params}:any) => {
           <AdminSidebar />
         </div>
         <div className="w-[85%]">
-          <DashboardHeader />
-          <EditCourse  id = {id}/>
+          <DashboardHero />
+          <EditHero />
         </div>
       </div>
+      </AdminProtected>
     </div>
   );
 };

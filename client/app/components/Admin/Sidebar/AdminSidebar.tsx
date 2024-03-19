@@ -239,7 +239,7 @@ const Sidebar = () => {
 
             <Item
               title="FAQ"
-              to="/faq"
+              to="/admin/faq"
               icon={<Quiz />}
               selected={selected}
               setSelected={setSelected}

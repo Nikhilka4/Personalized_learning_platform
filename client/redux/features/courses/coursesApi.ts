@@ -1,3 +1,4 @@
+import { editCourse } from './../../../../server/controllers/course.controller';
 import { apiSlice } from "../api/apiSlice";
 
 export const courseApi = apiSlice.injectEndpoints({
@@ -23,8 +24,16 @@ export const courseApi = apiSlice.injectEndpoints({
         method: "DELETE",
         credentials: "include" as const,
       })
+    }),
+    editCourse: builder.mutation({
+      query: ({id,data}) => ({
+        url:`edit-course/${id}`,
+        method: "PUT",
+        body:  data ,
+        credentials: "include" as const,
+      })
     })
   }),
 });
 
-export const { useCreateCourseMutation,useGetAllCoursesQuery,useDeleteCourseMutation } = courseApi;
+export const { useCreateCourseMutation,useGetAllCoursesQuery,useDeleteCourseMutation, useEditCourseMutation } = courseApi;
