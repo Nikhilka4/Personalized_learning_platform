@@ -277,59 +277,49 @@ const Sidebar = () => {
               {!isCollapsed && "Analytics"}
             </Typography>
 
-            <Item 
-                title="Courses Analytics"
-                to="/admin/courses-analytics"
-                icon={<BarChartOutlined />}
-                selected={selected}
-                setSelected={setSelected}
-              />
-              <Item 
-                title="Order Analytics"
-                to="/admin/order-analytics"
-                icon={<MapOutlined />}
-                selected={selected}
-                setSelected={setSelected}
-              />
-              <Item 
-                title="Users Analytics"
-                to="/admin/users-analytics"
-                icon={<ManageHistory />}
-                selected={selected}
-                setSelected={setSelected}
-              />
+            <Item
+              title="Courses Analytics"
+              to="/admin/courses-analytics"
+              icon={<BarChartOutlined />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="Order Analytics"
+              to="/admin/orders-analytics"
+              icon={<MapOutlined />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="Users Analytics"
+              to="/admin/users-analytics"
+              icon={<ManageHistory />}
+              selected={selected}
+              setSelected={setSelected}
+            />
 
-<Typography
+            <Typography
               variant="h5"
               className="!text-[18px] text-black dark:text-[#ffffffc1] capitalize !font-[400]"
               sx={{ m: "15px 0 5px 25px" }}
             >
               {!isCollapsed && "Extras"}
             </Typography>
-
-            <Item 
-                title="Settings"
-                to="/admin/setting"
-                icon={<Settings />}
-                selected={selected}
-                setSelected={setSelected}
-              />
-              <div onClick={logoutHandler}>
-              <Item 
+            <div onClick={logoutHandler}>
+              <Item
                 title="Logout"
                 to="/"
                 icon={<ExitToApp />}
                 selected={selected}
                 setSelected={setSelected}
               />
-              </div>
+            </div>
           </Box>
         </Menu>
       </ProSidebar>
     </Box>
   );
 };
-
-
 
 export default Sidebar;

@@ -26,7 +26,7 @@ const EditHero: FC<Props> = (props: Props) => {
       setImage(data?.layout?.banner?.image?.url);
     }
     if (isSuccess) {
-        refetch();
+      refetch();
       toast.success("Hero updated successfully");
     }
     if (error) {
