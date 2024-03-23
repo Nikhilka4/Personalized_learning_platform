@@ -18,7 +18,6 @@ import {
   Quiz,
   Wysiwyg,
   ManageHistory,
-  Settings,
   ExitToApp,
 } from "@mui/icons-material";
 import avatarDefault from "../../../../public/assets/avatar.png";
@@ -189,13 +188,13 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
 
-            <Item
+            {/* <Item
               title="Invoices"
               to="/admin/invoices"
               icon={<ReceiptOutlined />}
               selected={selected}
               setSelected={setSelected}
-            />
+            /> */}
 
             <Typography
               variant="h5"
