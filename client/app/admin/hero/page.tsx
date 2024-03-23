@@ -1,9 +1,9 @@
 "use client";
+import DashboardHero from "../../../app/components/Admin/Dashboard/DashboardHero";
+import AdminProtected from "@/app/hooks/adminProtectedr";
+import Heading from "../../../app/utils/Heading";
 import React from "react";
 import AdminSidebar from "../../components/Admin/Sidebar/AdminSidebar";
-import Heading from "../../../app/utils/Heading";
-import AdminProtected from "@/app/hooks/adminProtectedr";
-import DashboardHero from "../../../app/components/Admin/Dashboard/DashboardHero";
 import EditHero from "../../components/Admin/Customization/EditHero";
 
 

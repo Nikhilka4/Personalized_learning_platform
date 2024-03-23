@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@mui/x-data-grid": "^6.19.6",
+    "@stripe/react-stripe-js": "^2.6.2",
+    "@stripe/stripe-js": "^3.0.10",
     "axios": "^1.6.7",
     "next": "14.1.2",
     "next-auth": "^4.24.7",
