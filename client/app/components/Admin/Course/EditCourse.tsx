@@ -44,6 +44,7 @@ const EditCourse:FC<Props> = ({id}) => {
         setCourseInfo({
           name: editCourseData.name,
           description: editCourseData.description,
+          categories: editCourseData.categories,
           price: editCourseData.price,
           estimatedPrice: editCourseData?.estimatedPrice,
           tags: editCourseData.tags,
@@ -63,6 +64,7 @@ const EditCourse:FC<Props> = ({id}) => {
     name: "",
     description: "",
     price: "",
+    categories:"",
     estimatedPrice: "",
     tags: "",
     level: "",
@@ -119,6 +121,7 @@ const EditCourse:FC<Props> = ({id}) => {
       name: courseInfo.name,
       description: courseInfo.description,
       price: courseInfo.price,
+      categories: courseInfo.categories,
       estimatedPrice: courseInfo.estimatedPrice,
       tags: courseInfo.tags,
       thumbnail: courseInfo.thumbnail,

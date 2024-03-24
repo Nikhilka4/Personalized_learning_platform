@@ -9,6 +9,7 @@ import { format } from "timeago.js";
 import {Elements} from '@stripe/react-stripe-js'
 import CheckOutForm from "../Payment/CheckOutForm"
 import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
+import { redirect } from "next/navigation";
 
 type Props = {
   data: any;
@@ -30,7 +31,8 @@ const CourseDetails = ({ data,stripePromise,clientSecret }: Props) => {
     user && user?.courses?.find((item: any) => item._id === data._id);
 
   const handleOrder = (e: any) => {
-    setOpen(true);
+    // setOpen(true);
+    redirect(`/course-access/${data._id}`)
   };
 
   return (
@@ -174,21 +176,14 @@ const CourseDetails = ({ data,stripePromise,clientSecret }: Props) => {
                 </h4>
               </div>
               <div className="flex items-center">
-                {isPurchased ? (
+                
                   <Link
                     className={`${styles.button} !w-[180px] my-3 font-Poppins cursor-pointer !bg-[crimson]`}
                     href={`/course-access/${data._id}`}
                   >
                     Enter to Course
                   </Link>
-                ) : (
-                  <div
-                    className={`${styles.button} !w-[180px] my-3 font-Poppins cursor-pointer !bg-[crimson]`}
-                    onClick={handleOrder}
-                  >
-                    Buy Now ₹{data.price}
-                  </div>
-                )}
+               
               </div>
               <br />
                   <p className="pb-1 text-black dark:text-white">• Source code included</p>
@@ -201,7 +196,7 @@ const CourseDetails = ({ data,stripePromise,clientSecret }: Props) => {
         </div>
       </div>
       <>
-      {
+      {/* {
         open && (
           <div className="w-full h-screen bg-[#00000036] fixed top-0 left-0 z-50 flex items-center justify-center">
             <div className="w-[500px] min-h-[500px] bg-white rounded-xl shadow p-3">
@@ -223,7 +218,7 @@ const CourseDetails = ({ data,stripePromise,clientSecret }: Props) => {
             </div>
           </div>
         )
-      }
+      } */}
       </>
     </div>
   );
