@@ -100,7 +100,7 @@ export const createOrder = CatchAsyncError(
       const notification = await NotificationModel.create({
         userId: user?._id,
         title: "New Order",
-        message: `You have purchased ${course?.name}`,
+        message: `You have new order from ${course?.name}`,
       });
 
       course.purchased ? course.purchased += 1 : course.purchased; 
@@ -137,7 +137,7 @@ export const newPayment = CatchAsyncError(async(req:Request,res: Response, next:
   try {
     const myPayment = await stripe.paymentIntents.create({
       amount: req.body.amount,
-      currency: "USD",
+      currency: "INR",
       metadata: {
       company: "E-Learning",},
       automatic_payment_methods:{
@@ -149,7 +149,7 @@ export const newPayment = CatchAsyncError(async(req:Request,res: Response, next:
       client_secret: myPayment.client_secret,
     })
   } catch (error: any) {
-    return next(new ErrorHandler(error.message, 400));
+    return next(new ErrorHandler(error.message, 500));
   }
 })
 

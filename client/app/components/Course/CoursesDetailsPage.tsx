@@ -24,7 +24,7 @@ const CoursesDetailsPage = ({ id }: Props) => {
   useEffect(() => {
     if (config) {
       const publishablekey = config?.publishableKey;
-      setStripePromise(loadStripe(publishablekey));
+      setStripePromise(loadStripe(`${publishablekey}`));
     }
     if(data) {
       const amount = Math.round(data.course.price * 100);
